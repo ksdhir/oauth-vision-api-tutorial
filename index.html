@@ -91,7 +91,15 @@
 	      // Simply output the response
 	      console.log(json);
 	      results.innerHTML = '';
-	      json.responses[0].labelAnnotations.forEach( annotation => {
+		if(json.responses[0].logoAnnotations == undefined) {
+		let div = document.createElement('div');
+		let description = document.createElement('span');
+		description.innerText = "No Brands Identified!"
+		div.append(description);
+		results.append(div);
+		return;
+		}
+	      json.responses[0].logoAnnotations.forEach( annotation => {
 		  let description = document.createElement('span');
 		  let score = document.createElement('span');
 
@@ -99,8 +107,7 @@
 		  description.innerText = annotation.description;
 		  score.innerText = annotation.score;
 
-		  div.append(description,score);
-
+		  div.append(description, score);
 		  results.append(div);
 	      });
 	  });
